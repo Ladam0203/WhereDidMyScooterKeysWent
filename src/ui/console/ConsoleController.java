@@ -1,13 +1,14 @@
 package ui.console;
 
+import bll.Game;
 import ui.UI;
 
 import java.util.Scanner;
 
-public class Console implements UI {
+public class ConsoleController implements UI {
     Scanner scanner;
 
-    public Console()
+    public ConsoleController()
     {
         scanner = new Scanner(System.in);
     }

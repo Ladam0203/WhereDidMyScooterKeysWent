@@ -5,8 +5,8 @@ import enums.Command;
 import ui.UI;
 
 public class Game {
-    UI ui;
-    Parser parser;
+    private UI ui;
+    private Parser parser;
 
     public Game(UI ui)
     {
@@ -14,20 +14,22 @@ public class Game {
         parser = new Parser();
     }
 
-    public void run()
+    public void start()
     {
         ui.displayNextOutputLine(welcomeMessage());
-        while(true) {
-            String inputline = ui.acquireNextInputLine();
-            String[] tokens = inputline.split("\\s"); // default split on white space
-            UserRequest behavior = parser.getBehaviour(tokens[0]);
-            if(tokens == null) ui.displayError(inputline);
-            try {
-                ui.displayNextOutputLine(behavior.callback(tokens));
-                if(tokens[0].equals(Command.QUIT.toString())) ui.exitEnvironment();
-            }
-            catch(Exception e) { ui.displayError("Unknown command!"); };
+    }
+
+    public void execute()
+    {
+        String inputline = ui.acquireNextInputLine();
+        String[] tokens = inputline.split("\\s"); // default split on white space
+        UserRequest behavior = parser.getBehaviour(tokens[0]);
+        if(tokens == null) ui.displayError(inputline);
+        try {
+            ui.displayNextOutputLine(behavior.callback(tokens));
+            if(tokens[0].equals(Command.QUIT.toString())) ui.exitEnvironment();
         }
+        catch(Exception e) { ui.displayError("Unknown command!"); };
     }
 
     public String welcomeMessage()
