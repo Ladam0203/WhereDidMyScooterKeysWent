@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 public class GameEngine {
     Player player;
+
     public GameEngine(Player player)
     {
         this.player = player;
@@ -23,6 +24,8 @@ public class GameEngine {
         myRoom.setExit("south", hall);
 
         hall.addItem(new Item("umbrella", "a must-have in Denmark", 1, true));
+
+        myRoom.addItem(new Item("fanny-pack", "I would never go anywhere without this", 0.5, true));
 
         player.setCurrentRoom(hall);
     }
@@ -58,6 +61,10 @@ public class GameEngine {
         if (!item.canBePickedUp())
         {
             return "You cannot pick up this item!";
+        }
+        if (item.getWeight() > player.getInventorySpace())
+        {
+            return "You cannot carry this too!";
         }
         player.getCurrentRoom().removeItem(item);
         player.addItem(item);
