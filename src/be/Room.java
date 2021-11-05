@@ -1,18 +1,18 @@
 package be;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import javafx.collections.ObservableList;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Room {
-    private String description;
+    private String name;
     private HashMap<String, Room> exits;
     private List<Item> items;
 
-    public Room(String description)
+    public Room(String name)
     {
-        this.description = description;
+        this.name = name;
         exits = new HashMap<>();
         items = new ArrayList<>();
     }
@@ -29,9 +29,19 @@ public class Room {
     /**
      * @return The description of the room.
      */
-    private String getDescription()
+    public String getName()
     {
-        return description;
+        return name;
+    }
+
+    public Set<String> getExitDirections()
+    {
+        return exits.keySet();
+    }
+
+    public List<Item> getItems()
+    {
+        return Collections.unmodifiableList(items);
     }
 
     public Room getExit(String direction)
@@ -48,7 +58,7 @@ public class Room {
 
     public String getExitString()
     {
-        return "-Exits: " + String.join(" ", exits.keySet());
+        return "Exits: " + String.join(" ", exits.keySet());
     }
 
     public String getItemString()
@@ -57,11 +67,11 @@ public class Room {
         {
             return "-Items: " + items.stream().map(Item::getName).collect(Collectors.joining(" "));
         }
-        return "-No items in this room";
+        return "No items in this room";
     }
 
     public String getLongDescription()
     {
-        return "[" + getDescription() + "]\n" + getExitString() + "\n" + getItemString();
+        return "[" + getName() + "]\n" + getExitString() + "\n" + getItemString();
     }
 }

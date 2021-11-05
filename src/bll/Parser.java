@@ -1,5 +1,6 @@
 package bll;
 
+import be.Player;
 import enums.Command;
 
 import java.util.HashMap;
@@ -11,9 +12,9 @@ public class Parser {
     private GameEngine engine;
     private Map<String,UserRequest> behaviours;
 
-    public Parser()
+    public Parser(Player player)
     {
-        engine = new GameEngine();
+        engine = new GameEngine(player);
         behaviours = new HashMap<>();
         initRequests();
     }
@@ -64,7 +65,36 @@ public class Parser {
             }
         };
         behaviours.put(observe.getCommandWord(), observe);
+
+        UserRequest take = new UserRequest(Command.TAKE, 1) {
+            @Override
+            public String callback(String[] args) {
+                if (args[1] == null)
+                    return "Take what?";
+                return engine.take(args[1]);
+                }
+            };
+        behaviours.put(take.getCommandWord(), take);
+
+        UserRequest drop = new UserRequest(Command.DROP, 1) {
+            @Override
+            public String callback(String[] args) {
+                if (args[1] == null)
+                    return "Drop what?";
+                return engine.drop(args[1]);
+            }
+        };
+        behaviours.put(drop.getCommandWord(),drop);
+
+        UserRequest inventory = new UserRequest(Command.INVENTORY, 0) {
+            @Override
+            public String callback(String[] args) {
+                return engine.inventory();
+            }
+        };
+        behaviours.put(inventory.getCommandWord(), inventory);
     }
+
 
     public UserRequest getBehaviour(String commandWord)
     {

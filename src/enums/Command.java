@@ -1,7 +1,8 @@
 package enums;
 
 public enum Command {
-    HELP("help"), QUIT("quit"), GO("go"), LOOK("look"),OBSERVE("observe");
+    //TODO: implement commands
+    HELP("help"), QUIT("quit"), GO("go"), LOOK("look"),OBSERVE("observe"), TAKE("take"), DROP("drop"), INVENTORY("inventory"), CONSUME("consume"), BACK("back");
 
     private String commandWord;
     Command(String commandWord)

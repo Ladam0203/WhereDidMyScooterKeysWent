@@ -1,6 +1,9 @@
 package be;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -25,6 +28,11 @@ public class Player {
         this.currentRoom = currentRoom;
     }
 
+    public double getInventoryCapacity()
+    {
+        return inventoryCapacity;
+    }
+
     public Stack<Room> getPath() {
         return path;
     }
@@ -32,6 +40,16 @@ public class Player {
     public Item getItem(String name)
     {
         return inventory.stream().filter(item -> item.getName().equals(name)).findFirst().orElse(null);
+    }
+
+    public void addItem(Item item)
+    {
+        inventory.add(item);
+    }
+
+    public void removeItem(Item item)
+    {
+        inventory.remove(item);
     }
 
     public double getInventoryWeight()
@@ -44,20 +62,13 @@ public class Player {
         return inventoryCapacity - inventory.stream().mapToDouble(Item::getWeight).sum();
     }
 
-    public String getInventoryString()
-    {
-        if (inventory.size() == 0)
-        {
-            return "You have no items on you.";
-        }
-        else
-        {
-            return "Inventory (" + inventoryCapacity + "kg/" + getInventoryWeight() + "kg):\n" + inventory.stream().map(Item::getLongDescription).collect(Collectors.joining("\n"));
-        }
-    }
-
     public void addToPath(Room room)
     {
         path.add(room);
+    }
+
+    public List<Item> getInventory()
+    {
+        return Collections.unmodifiableList(inventory);
     }
 }

@@ -35,4 +35,10 @@ public class Item {
     {
         return getName() + " : " + getDescription() + " (" + getWeight() + "kg)";
     }
+
+    @Override
+    public String toString()
+    {
+        return getLongDescription();
+    }
 }

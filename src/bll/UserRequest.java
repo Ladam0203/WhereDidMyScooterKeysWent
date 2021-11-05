@@ -1,5 +1,6 @@
 package bll;
 
+import be.Player;
 import enums.Command;
 
 public abstract class UserRequest {
