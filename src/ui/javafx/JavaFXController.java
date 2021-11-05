@@ -30,7 +30,7 @@ public class JavaFXController implements Initializable, UI {  //needs refactorin
     @FXML
     private ListView<String> lsvRoomItems;
     @FXML
-    private Button btnNorth, btnEast, btnSouth, btnWest;
+    ListView<String> lsvExits;
 
 
     Game game;
@@ -53,49 +53,10 @@ public class JavaFXController implements Initializable, UI {  //needs refactorin
 
     private void displayGUIData()
     {
-
         lblRoomName.setText("Room: [" + game.getCurrentRoomName() + "]");
         lsvRoomItems.setItems(FXCollections.observableArrayList(game.getCurrentRoomItems().stream().map(Item::getName).toList()));
-
         lsvInventory.setItems(FXCollections.observableArrayList(game.getPlayerInventory()));
-
-        if (game.getExitDirections().contains("north"))
-            btnNorth.setDisable(false);
-        else
-            btnNorth.setDisable(true);
-        if (game.getExitDirections().contains("east"))
-            btnEast.setDisable(false);
-        else
-            btnEast.setDisable(true);
-        if (game.getExitDirections().contains("south"))
-            btnSouth.setDisable(false);
-        else
-            btnSouth.setDisable(true);
-        if (game.getExitDirections().contains("west"))
-            btnWest.setDisable(false);
-        else
-            btnWest.setDisable(true);
-    }
-
-    public void goNorth()
-    {
-        txfInput.setText(Command.GO + " north");
-        sendInput();
-    }
-    public void goEast()
-    {
-        txfInput.setText(Command.GO + " east");
-        sendInput();
-    }
-    public void goSouth()
-    {
-        txfInput.setText(Command.GO + " south");
-        sendInput();
-    }
-    public void goWest()
-    {
-        txfInput.setText(Command.GO + " west");
-        sendInput();
+        lsvExits.setItems(FXCollections.observableArrayList(game.getExitDirections()));
     }
 
     @Override
